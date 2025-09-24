@@ -14,14 +14,14 @@ class LoginService {
 
   String get baseUrlLogin => '$baseUrl/login';
 
-  Future<bool> login(UserModel user) async {
+  Future<UserModel> login(UserModel user) async {
     try {
       response = await dio.post(baseUrlLogin, data: user.toMap());
       sl.get<SharedPreferences>().setString(tOKEN, response.data['token']);
-      return true;
+      return UserModel.fromMap(response.data['user']);
     } catch (e) {
-      print(e);
-      return false;
+      // print(e);
+      rethrow;
     }
   }
 }

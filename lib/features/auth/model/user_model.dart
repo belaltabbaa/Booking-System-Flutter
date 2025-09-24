@@ -1,22 +1,25 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-
 class UserModel {
-  String email;
-  String password;
+  final String email;
+  final String password;
+  final String? role;
   UserModel({
     required this.email,
     required this.password,
+    this.role,
   });
 
   UserModel copyWith({
     String? email,
     String? password,
+    String? role,
   }) {
     return UserModel(
       email: email ?? this.email,
       password: password ?? this.password,
+      role: role ?? this.role,
     );
   }
 
@@ -24,13 +27,15 @@ class UserModel {
     return <String, dynamic>{
       'email': email,
       'password': password,
+      'role': role,
     };
   }
 
-  factory UserModel.fromMap(Map<String, dynamic> map) {
+ factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      email: map['email'] as String,
-      password: map['password'] as String,
+      email: map['email'] != null ? map['email'].toString() : '',
+      password: map['password'] != null ? map['password'].toString() : '',
+      role: map['role']?.toString(),
     );
   }
 
@@ -39,7 +44,7 @@ class UserModel {
   factory UserModel.fromJson(String source) => UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'UserModel(email: $email, password: $password)';
+  String toString() => 'UserModel(email: $email, password: $password, role: $role)';
 
   @override
   bool operator ==(covariant UserModel other) {
@@ -47,9 +52,10 @@ class UserModel {
   
     return 
       other.email == email &&
-      other.password == password;
+      other.password == password &&
+      other.role == role;
   }
 
   @override
-  int get hashCode => email.hashCode ^ password.hashCode;
+  int get hashCode => email.hashCode ^ password.hashCode ^ role.hashCode;
 }

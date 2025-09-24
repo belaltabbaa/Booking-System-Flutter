@@ -11,4 +11,13 @@ class ErrorState extends AuthState {}
 
 class LoadingState extends AuthState {}
 
-class SuccessLoginState extends AuthState {}
+class SuccessLoginState extends AuthState {
+  final UserModel user;
+  SuccessLoginState({required this.user});
+}
+
+class AuthAuthenticated extends AuthState {
+  final UserModel user;
+  AuthAuthenticated(this.user);
+
+}

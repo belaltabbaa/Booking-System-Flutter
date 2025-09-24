@@ -7,7 +7,7 @@ class InputBox extends StatelessWidget {
   final String hint;
   final int? maxLines;
   final TextEditingController controller;
-  final String? Function(String?)? validator; // دالة الفاليديشن
+  final String? Function(String?)? validator;
   final TextInputType keyboardType;
 
   const InputBox({
@@ -37,7 +37,7 @@ class InputBox extends StatelessWidget {
             controller: controller,
             maxLines: maxLines ?? 1,
             keyboardType: keyboardType,
-            validator: validator, // هنا يتم استخدام الفاليديشن
+            validator: validator, 
             decoration: InputDecoration(
               hintText: hint,
               filled: true,

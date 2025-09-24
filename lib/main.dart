@@ -1,6 +1,6 @@
 import 'package:booking_system/config/observer.dart';
 import 'package:booking_system/config/service_locator.dart';
-import 'package:booking_system/features/auth/view/login_page.dart';
+import 'package:booking_system/features/auth/view/signup_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: LoginPage());
+    return MaterialApp(debugShowCheckedModeBanner: false, home: SignupPage());
   }
 }
 

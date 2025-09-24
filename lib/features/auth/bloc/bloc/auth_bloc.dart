@@ -25,9 +25,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     });
     on<LoginEvent>((event, emit) async {
       emit(LoadingState());
-      bool status = await loginService.login(event.user);
-      if (status) {
-        emit(SuccessLoginState());
+      final user = await loginService.login(event.user);
+      // ignore: unnecessary_null_comparison
+      if (user != null) {
+        emit(SuccessLoginState(user: user));
       } else {
         emit(ErrorState());
       }

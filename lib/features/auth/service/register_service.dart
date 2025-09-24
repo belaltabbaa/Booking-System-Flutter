@@ -13,10 +13,20 @@ class RegisterService {
 
   Future<bool> register(RegisterModel register) async {
     try {
-      response = await dio.post(baseUrlregister,data: register.toMap());
-      return true;
+      response = await dio.post(
+        baseUrlregister,
+        data: register.toMap(),
+        options: Options(headers: {'Accept': 'application/json'}),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      } else {
+        // print('Registration failed: ${response.data}');
+        return false;
+      }
     } catch (e) {
-      print(e);
+      // print('Register exception: $e');
       return false;
     }
   }

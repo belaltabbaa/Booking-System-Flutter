@@ -2,63 +2,83 @@
 import 'dart:convert';
 
 class RegisterModel {
-  String username;
-  String email;
-  String password;
-  String role="USER";
+  final String username;
+  final String email;
+  final String password;
+  final String passwordConfirmation;
+  String? role = "user";
   RegisterModel({
     required this.username,
     required this.email,
     required this.password,
-    required this.role,
+    required this.passwordConfirmation,
+    this.role,
   });
 
   RegisterModel copyWith({
     String? username,
     String? email,
     String? password,
-    String? role,
+    String? passwordConfirmation,
+    String? role = "user",
   }) {
     return RegisterModel(
       username: username ?? this.username,
       email: email ?? this.email,
       password: password ?? this.password,
+      passwordConfirmation: passwordConfirmation ?? this.passwordConfirmation,
       role: role ?? this.role,
     );
   }
 
   Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'username': username,
+    return {
+      'name': username,
       'email': email,
       'password': password,
-      'role': "USER",
+      'password_confirmation': passwordConfirmation,
+      'role': "user",
     };
   }
 
   factory RegisterModel.fromMap(Map<String, dynamic> map) {
+    final user = map['User'] ?? {};
     return RegisterModel(
-      username: map['username'] as String,
-      email: map['email'] as String,
-      password: map['password'] as String,
-      role: map['role'] as String,
+      username: user['name'] ?? '',
+      email: user['email'] ?? '',
+      password: '',
+      passwordConfirmation: '',
+      role: user['role'] ?? 'user',
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory RegisterModel.fromJson(String source) => RegisterModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory RegisterModel.fromJson(String source) =>
+      RegisterModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  @override
+  String toString() {
+    return 'RegisterModel(username: $username, email: $email, password: $password, passwordConfirmation: $passwordConfirmation, role: $role)';
+  }
 
   @override
   bool operator ==(covariant RegisterModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.username == username &&
-      other.email == email &&
-      other.password == password &&
-      other.role == role;
+
+    return other.username == username &&
+        other.email == email &&
+        other.password == password &&
+        other.passwordConfirmation == passwordConfirmation &&
+        other.role == role;
   }
 
+  @override
+  int get hashCode {
+    return username.hashCode ^
+        email.hashCode ^
+        password.hashCode ^
+        passwordConfirmation.hashCode ^
+        role.hashCode;
+  }
 }

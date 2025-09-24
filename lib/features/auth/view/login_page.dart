@@ -2,8 +2,10 @@ import 'package:booking_system/features/auth/bloc/bloc/auth_bloc.dart';
 import 'package:booking_system/features/auth/model/user_model.dart';
 import 'package:booking_system/features/auth/service/login_service.dart';
 import 'package:booking_system/features/auth/service/register_service.dart';
+import 'package:booking_system/features/auth/view/signup_page.dart';
 import 'package:booking_system/features/auth/widget/txtfiled.dart';
 import 'package:booking_system/features/home/view/home_page.dart';
+import 'package:booking_system/features/settings/view/setting_page.dart';
 import 'package:booking_system/resources/color_app.dart';
 import 'package:booking_system/resources/image_app.dart';
 import 'package:booking_system/resources/string_app.dart';
@@ -125,12 +127,23 @@ class _LoginPageState extends State<LoginPage> {
                                   BlocConsumer<AuthBloc, AuthState>(
                                     listener: (context, state) {
                                       if (state is SuccessLoginState) {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => HomePage(),
-                                          ),
-                                        );
+                                        if (state.user.role!.toLowerCase() ==
+                                            "admin") {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder:
+                                                  (_) => const SettingPage(),
+                                            ),
+                                          );
+                                        } else {
+                                          Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => const HomePage(),
+                                            ),
+                                          );
+                                        }
                                       }
                                       if (state is ErrorState) {
                                         ScaffoldMessenger.of(
@@ -189,6 +202,29 @@ class _LoginPageState extends State<LoginPage> {
                                                     ),
                                                   ),
                                                 ),
+                                      );
+                                    },
+                                  ),
+                                  SizedBox(height: 10.h,),
+                                  InkWell(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Text(
+                                          'إنشاء حساب',
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            color: ColorApp.yellowText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => SignupPage(),
+                                        ),
                                       );
                                     },
                                   ),
